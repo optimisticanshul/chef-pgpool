@@ -85,14 +85,14 @@ default['pgpool']['pgconf']['recovery_first_stage_command'] = '' # Should overri
 default['pgpool']['pgconf']['recovery_second_stage_command'] = '' # Should override
 default['pgpool']['pgconf']['recovery_timeout'] = 90
 default['pgpool']['pgconf']['client_idle_limit_in_recovery'] = 0
-default['pgpool']['pgconf']['use_watchdog'] = false # Should override
+default['pgpool']['pgconf']['use_watchdog'] = true # Should override
 default['pgpool']['pgconf']['trusted_servers'] = '' # Should override
 default['pgpool']['pgconf']['ping_path'] = '/bin'
 default['pgpool']['pgconf']['wd_hostname'] = '' # Should override
 default['pgpool']['pgconf']['other_wd_port0'] = 9000
 default['pgpool']['pgconf']['wd_port'] = 9000
-default['pgpool']['pgconf']['wd_authkey'] = '' # Should override
-default['pgpool']['pgconf']['delegate_IP'] = '' # Should override
+default['pgpool']['pgconf']['wd_authkey'] = 'defc08be2f1581611242d978347b48fc' # Should override
+default['pgpool']['pgconf']['delegate_IP'] = 'pgpool.chinchilastg.internal' # Should override
 default['pgpool']['pgconf']['ifconfig_path'] = '/sbin'
 default['pgpool']['pgconf']['if_up_cmd'] = '' # Should override
 default['pgpool']['pgconf']['if_down_cmd'] = '' # Should override
@@ -122,6 +122,6 @@ default['pgpool']['pgconf']['other_pgpool_hostname0'] = '' # Should override if
 default['pgpool']['pgconf']['other_pgpool_port0'] = 9999
 default['pgpool']['pg_hba']['auth'] = [
   { type: 'local', db: 'all', user: 'all', addr: nil, method: 'md5' },
-  { type: 'local', db: 'all', user: 'all', addr: '0.0.0.0/0', method: 'md5' },
+  { type: 'host', db: 'all', user: 'all', addr: '0.0.0.0/0', method: 'md5' },
   { type: 'host', db: 'all', user: 'all', addr: '127.0.0.1/32', method: 'md5' }
 ]

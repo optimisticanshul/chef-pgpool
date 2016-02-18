@@ -6,10 +6,45 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+instance = search("aws_opsworks_instance").first
+other_pgpool_hostname = ''
+route_file = '/home/ubuntu/route.json'
+search("aws_opsworks_instance").each do |i|
+  if i['private_ip'] != instance['private_ip']
+    other_pgpool_hostname = i['private_ip']
+    Chef::Log.info("********** other_pgpool_hostname '#{i['private_ip']}' **********")
+  end
+end
+
+if_up_cmd = "aws route53 change-resource-record-sets --hosted-zone-id #{node['route53']['hosted_zone_id']} --change-batch file://#{route_file}"
+node.override['pgpool']['pgconf']['other_pgpool_hostname0'] = other_pgpool_hostname
+node.override['pgpool']['pgconf']['if_up_cmd'] = if_up_cmd
+
+template "#{route_file}" do
+  owner 'ubuntu'
+  group 'ubuntu'
+  action :create
+  variables({
+    other_pgpool_hostname: other_pgpool_hostname
+  })
+end
+
+file "#{node['pgpool']['config']['dir']}/pool_passwd" do
+  owner node['pgpool']['user']
+  group node['pgpool']['group']
+  action :create
+end
+
 package node['pgpool']['config']['package_name'] do
   action :install
 end
 
+case node['platform']
+when 'debian', 'ubuntu'
+package 'postgresql-client' do
+  action :install
+end
+end
 group node['pgpool']['group'] do
   action :create
 end
