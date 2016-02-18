@@ -3,12 +3,12 @@
     {
       "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": <%= node['route53']['record_set'] %>,
+        "Name": "<%= node['route53']['record_set'] %>",
         "Type": "A",
         "TTL": 1,
         "ResourceRecords": [
           {
-            "Value": <%= @other_pgpool_hostname %>
+            "Value": "<%= @other_pgpool_hostname %>"
           }
         ]
       }

@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-instance = search("aws_opsworks_instance").first
+instance = instance = search("aws_opsworks_instance", "self:true").first
 other_pgpool_hostname = ''
 route_file = '/home/ubuntu/route.json'
 search("aws_opsworks_instance").each do |i|
